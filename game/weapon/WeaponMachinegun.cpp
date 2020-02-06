@@ -28,6 +28,9 @@ protected:
 
 private:
 
+	//My Change
+	int					fireHeldTime;
+
 	stateResult_t		State_Idle			( const stateParms_t& parms );
 	stateResult_t		State_Fire			( const stateParms_t& parms );
 	stateResult_t		State_Reload		( const stateParms_t& parms );
@@ -53,10 +56,13 @@ rvWeaponMachinegun::Spawn
 ================
 */
 void rvWeaponMachinegun::Spawn ( void ) {
-	spreadZoom = spawnArgs.GetFloat ( "spreadZoom" );
+	spreadZoom = spawnArgs.GetFloat("spreadZoom");
 	fireHeld   = false;
 		
-	SetState ( "Raise", 0 );	
+	SetState ( "Raise", 0 );
+
+	//My Change
+	fireHeldTime = 0;
 	
 	Flashlight ( owner->IsFlashlightOn() );
 }
@@ -232,6 +238,14 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 				fireHeld = true;
 			} else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+				
+				//My Change
+				//Literally does nothing yet
+				if (fireHeld){
+					fireRate = fireRate * (gameLocal.time - fireHeldTime);
+					nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+				}
+
 				Attack ( false, 3, spread, 0, 1.0f );
 			}
 			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
