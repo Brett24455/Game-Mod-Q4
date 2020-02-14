@@ -721,7 +721,7 @@ entityDef player_marine
 	"respawn_delay"						"1.7"		// minimum delay for respawning after death
 
 	// stats
-	"health"						"100"
+	"health"						"200" //Changed from 100
 	"maxhealth"						"100"
 	"armor"							"0"
 	"maxarmor"						"100"
@@ -732,7 +732,7 @@ entityDef player_marine
 	"ammo_railgun"						"0"
 	"ammo_machinegun"					"0"
 	"ammo_nailgun"						"0"
-	"ammo_blaster"						"-1"
+	"ammo_blaster"						"40" //Changed from -1
 	"ammo_shotgun"						"0"
 	"ammo_hyperblaster"					"0"
 	"ammo_rocketlauncher"					"0"
@@ -740,14 +740,14 @@ entityDef player_marine
 	"ammo_lightninggun"					"0"
 	"ammo_none"						"-1"
 
-	"max_ammo_blaster"					"-1"
-	"max_ammo_railgun"					"50"
-	"max_ammo_machinegun"					"300"
-	"max_ammo_nailgun"					"300"
-	"max_ammo_shotgun"					"50"
-	"max_ammo_hyperblaster"					"400"
+	"max_ammo_blaster"					"88" //Changed from -1
+	"max_ammo_railgun"					"120" //Changed from 50
+	"max_ammo_machinegun"					"240" //Changed from 300
+	"max_ammo_nailgun"					"180" //Changed from 300
+	"max_ammo_shotgun"					"80" //Changed from 50
+	"max_ammo_hyperblaster"					"180" //Changed from 400
 	"max_ammo_napalmgun"					"40"
-	"max_ammo_rocketlauncher"				"40"
+	"max_ammo_rocketlauncher"				"64" //Changed from 40
 	"max_ammo_grenadelauncher"				"50"
 	"max_ammo_lightninggun"					"400"
 	"max_ammo_dmg"						"25"
