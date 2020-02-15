@@ -93,7 +93,7 @@ entityDef weapon_dmg
 	"joint_world_flash"			"muzzle_flash"
 	"joint_core"				"inner_ring"
 
-	"fireRate"					"2"
+	"fireRate"					"1.5" //Changed from 2
 	"spread"					"0"
 
 	"inv_weapon"				"weapon_dmg"
@@ -252,9 +252,9 @@ model weapon_dmg_world
 entityDef damage_dmg_fly
 {
 	"damage"					"30"
-	"radius"					"200"
+	"radius"					"300" //Changed from 200
 //	"knockback"					"100"
-	"push"						"-3000"
+	"push"						"10000" //Changed from -3000
 	"gib"						"1"
 
 	"attackerDamageScale"		"0"							// Dont hurt the player who shot it, but still do effects
@@ -276,7 +276,7 @@ entityDef damage_dmg_fly
 
 entityDef damage_dmg_splash 
 {
-	"damage"					"50"
+	"damage"					"0" //Changed from 50
 	"radius"					"150"
 	"knockback"					"100"
 	"push"						"20000"
@@ -308,18 +308,18 @@ entityDef projectile_dmg
 	"def_radius_damage"			"damage_dmg_fly"
 	"damageRate"				".05"
 																											
-	"speed"					"250"
+	"speed"					"1000" //Changed from 250
 	
 	"delay_splash"				".45"
 	
 	"linear_friction"			"0"
 	"angular_friction"			"0"
 	"contact_friction"			"10"
-	"fuse"					"10"
+	"fuse"					"0.4" //Changed from 10
 								
 	"detonate_on_fuse"			"1"
 	"detonate_on_death"			"0"
-	"detonate_on_world"			"1"
+	"detonate_on_world"			"0" //Changed from 1
 	"detonate_on_actor"			"0"
 								
 	"impact_gib"				"1"								
@@ -327,9 +327,9 @@ entityDef projectile_dmg
 
 	"flyEffectAttenuateSpeed"		"200"
 
-	"fx_fly"				"effects/weapons/dmg/fly.fx"
-	"fx_detonate"				"effects/weapons/dmg/impact_default.fx"
-	"fx_impact"				"effects/weapons/dmg/impact_default_mp.fx"
+	"fx_fly"				"" //Removed "effects/weapons/dmg/fly.fx"
+	"fx_detonate"				"" //Removed effects/weapons/dmg/impact_default.fx
+	"fx_impact"				"effects/weapons/dmg/impact_default_mp.fx" 
 	"fx_impact_water"			"effects/ambient/splash_med.fx"
 
 	"snd_ricochet"				"grenade_bounce"	

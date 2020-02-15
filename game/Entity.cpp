@@ -222,6 +222,7 @@ ABSTRACT_DECLARATION( idClass, idEntity )
 	EVENT( EV_SetHealth,			idEntity::Event_SetHealth )
 // RAVEN END
 END_CLASS
+//Useful Event_SetHealth
 
 /*
 ================
