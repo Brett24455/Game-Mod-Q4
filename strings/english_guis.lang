@@ -1088,7 +1088,7 @@
 	
 	// Ritual 1.3 patch GUI strings : #str_222000 - #str_222999
 	"#str_222000"	"Allow Buying"
-	"#str_222001"	"Napalm Gun"
+	"#str_222001"	"China Lake" //Changed from Napalm Gun
 	"#str_222002"	"Credits:"
 	"#str_222003"	"Weapons"
 	"#str_222004"	"Armor / Ammo"

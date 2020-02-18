@@ -746,9 +746,9 @@ entityDef player_marine
 	"max_ammo_nailgun"					"180" //Changed from 300
 	"max_ammo_shotgun"					"80" //Changed from 50
 	"max_ammo_hyperblaster"					"180" //Changed from 400
-	"max_ammo_napalmgun"					"40"
+	"max_ammo_napalmgun"					"22" //Changed from 40
 	"max_ammo_rocketlauncher"				"64" //Changed from 40
-	"max_ammo_grenadelauncher"				"50"
+	"max_ammo_grenadelauncher"				"24" //Changed from 50
 	"max_ammo_lightninggun"					"33" //Changed from 400
 	"max_ammo_dmg"						"14" //Changed from 25
 	"max_ammo_none"						"-1"

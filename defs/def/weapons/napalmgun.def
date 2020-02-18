@@ -81,7 +81,7 @@ entityDef weapon_napalmgun
 	"weaponname"				"Napalm Launcher"
 	"def_projectile"			"projectile_napalm"
 	"ammoType"					"ammo_napalmgun"
-	"clipSize"					"20"
+	"clipSize"					"2" //Changed from 20
 	"ammoRequired"				"1"
 	"gui"						"guis/weapons/napalmgun.gui"
 	"mtr_icon"					"gfx/guis/hud/icons/gun_napalmgun"
@@ -295,8 +295,8 @@ entityDef projectile_napalm
 	//"fx_impact_actor"			"effects/weapons/napalmgun/actorimpact"
 	
 	"fx_impact_actor"			"effects/weapons/rocketlauncher/detonate.fx"
-	"fx_impact"					"effects/weapons/napalmgun/impact.fx"
-	"fx_detonate"					"effects/weapons/napalmgun/detonate.fx"
+	"fx_impact"					"" //Removed effects/weapons/napalmgun/impact.fx
+	"fx_detonate"					"" //Removed effects/weapons/napalmgun/detonate.fx
 
 	//"delay_residual"				"1.5"
 	//"residual_time"					"6"
@@ -349,7 +349,7 @@ entityDef impact_napalm_projectile
 
 	"flyEffectAttenuateSpeed"	"200"
 	"fx_launch"					"effects/weapons/napalmgun/globburn.fx"
-	"fx_fly"					"effects/weapons/napalmgun/flyburn.fx"
+	"fx_fly"					"" //Removed effects/weapons/napalmgun/flyburn.fx
 
 	"delay_emit_damage"			"0.75"
 	"def_emit_damage"			"damage_napalmGlobEmit"
