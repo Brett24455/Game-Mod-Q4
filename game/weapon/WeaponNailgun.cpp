@@ -12,8 +12,8 @@ const int NAILGUN_DRUMSPEED_SLOW		= 1;
 const int NAILGUN_DRUMSPEED_FAST		= 2;
 
 // Spinup and spindown times
-const int NAILGUN_SPINDOWN_TIME			= 1000;
-const int NAILGUN_SPINUP_TIME			= 1000;
+const int NAILGUN_SPINDOWN_TIME			= 0; //Changed from 1000
+const int NAILGUN_SPINUP_TIME			= 0; //Changed from 1000
 
 // Nailgun shader parms
 const int NAILGUN_SPARM_PLAYLEADIN		= 7;
@@ -834,7 +834,7 @@ stateResult_t rvWeaponNailgun::State_DrumSpinUp ( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			viewModel->StartSound ( "snd_spinup", NAILGUN_SPIN_SNDCHANNEL, 0, false, NULL);
-			PlayAnim ( ANIMCHANNEL_LEGS, "spinup", 4 );
+			//Removed PlayAnim ( ANIMCHANNEL_LEGS, "spinup", 4 );
 			return SRESULT_STAGE(STAGE_WAIT);
 		
 		case STAGE_WAIT:
@@ -906,7 +906,7 @@ Open the clasp that holds in the clips
 ================
 */
 stateResult_t rvWeaponNailgun::Frame_ClaspOpen ( const stateParms_t& parms ) {
-	PlayAnim ( ANIMCHANNEL_TORSO, "clasp_open", 0 );
+	//Removed PlayAnim ( ANIMCHANNEL_TORSO, "clasp_open", 0 );
 	return SRESULT_OK;
 }
 
@@ -921,9 +921,9 @@ in the gun.
 */
 stateResult_t rvWeaponNailgun::Frame_ClaspClose ( const stateParms_t& parms ) {
 	if ( mods & NAILGUN_MOD_ROF_AMMO ) {
-		PlayAnim( ANIMCHANNEL_TORSO, "clasp_2clip", 0 );
+		//Removed PlayAnim( ANIMCHANNEL_TORSO, "clasp_2clip", 0 );
 	} else {
-		PlayAnim( ANIMCHANNEL_TORSO, "clasp_1clip", 0 );
+		//Removed PlayAnim( ANIMCHANNEL_TORSO, "clasp_1clip", 0 );
 	}
 	return SRESULT_OK;
 }
