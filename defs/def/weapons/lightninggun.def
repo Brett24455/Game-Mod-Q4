@@ -64,7 +64,7 @@ entityDef weapon_lightninggun
 
 	"chainLightningRange"		"0 0"
 
-	"fireRate"					".05"
+	"fireRate"					"1.5" //Changed from .05
 	"spread"					"1"
 	"range"						"1600"
 
@@ -292,9 +292,9 @@ entityDef hitscan_lightninggun_mp
 
 entityDef damage_lightninggun
 {
-	"damage"					"11"
+	"damage"					"100" //Changed from 11
 //	"knockback"					"10"
-	"gib"						"1"
+	"gib"						"0" //Changed from 1
 
 	"filter_electricity"		"1"						// can damage all entities with their damage_filter set to "electricity"
 	

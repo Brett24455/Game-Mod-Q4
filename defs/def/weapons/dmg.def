@@ -255,7 +255,7 @@ entityDef damage_dmg_fly
 	"radius"					"300" //Changed from 200
 //	"knockback"					"100"
 	"push"						"10000" //Changed from -3000
-	"gib"						"1"
+	"gib"						"0" //Changed from 1
 
 	"attackerDamageScale"		"0"							// Dont hurt the player who shot it, but still do effects
 	"attackerPushScale"			"0"							// Dont push the player who shot it
