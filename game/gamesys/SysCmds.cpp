@@ -557,6 +557,31 @@ void Cmd_Give_f( const idCmdArgs &args ) {
 
 /*
 ==================
+Cmd_Buy_f
+
+Buy an item based on z currency
+==================
+*/
+
+//CONSOLE BUY MENU
+void Cmd_Buy_f(const idCmdArgs &args) {
+	idPlayer	*player;
+	idInventory inventory;
+
+	player = gameLocal.GetLocalPlayer();
+	inventory = gameLocal.GetLocalPlayer()->inventory;
+	
+	if (!player || !gameLocal.CheatsOk()) {
+		return;
+	}
+
+	common->Printf("Money: %i",inventory.currency);
+	if (inventory.currency != 0)
+			GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+}
+
+/*
+==================
 Cmd_CenterView_f
 
 Centers the players pitch
@@ -2924,10 +2949,13 @@ void Cmd_AddIcon_f( const idCmdArgs& args ) {
 // squirrel: Mode-agnostic buymenus
 void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
-	if ( player && player->CanBuy() )
-	{
+	/*if ( player && player->CanBuy() )
+	{*/  
 		gameLocal.mpGame.OpenLocalBuyMenu();
-	}
+	/*}
+	else { //Added else statement
+		common->Printf("Cant open buy menu");
+	}*/
 }
 
 void Cmd_BuyItem_f( const idCmdArgs& args ) {
@@ -3066,6 +3094,9 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "addChatLine",			Cmd_AddChatLine_f,			CMD_FL_GAME,				"internal use - core to game chat lines" );
 	cmdSystem->AddCommand( "gameKick",				Cmd_Kick_f,					CMD_FL_GAME,				"same as kick, but recognizes player names" );
 	cmdSystem->AddCommand( "give",					Cmd_Give_f,					CMD_FL_GAME|CMD_FL_CHEAT,	"gives one or more items" );
+
+	cmdSystem->AddCommand("buy",					Cmd_Buy_f,					CMD_FL_GAME | CMD_FL_CHEAT, "gives one or more items");
+
 	cmdSystem->AddCommand( "centerview",			Cmd_CenterView_f,			CMD_FL_GAME,				"centers the view" );
 	cmdSystem->AddCommand( "god",					Cmd_God_f,					CMD_FL_GAME|CMD_FL_CHEAT,	"enables god mode" );
 	cmdSystem->AddCommand( "undying",				Cmd_Undying_f,				CMD_FL_GAME|CMD_FL_CHEAT,	"enables undying mode (take damage down to 1 health, but do not die)" );

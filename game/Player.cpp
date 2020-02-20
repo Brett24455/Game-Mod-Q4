@@ -337,9 +337,10 @@ void idInventory::RestoreInventory( idPlayer *owner, const idDict &dict ) {
 
 	// health/armor
 	maxHealth		= dict.GetInt( "maxhealth", "100" );
+	currency		= dict.GetInt( "currency", "500" );
 	armor			= dict.GetInt( "armor", "50" );
 	maxarmor		= dict.GetInt( "maxarmor", "100" );
-
+	
 	// ammo
 	for( i = 0; i < MAX_AMMOTYPES; i++ ) {
 		name = rvWeapon::GetAmmoNameForIndex ( i );
@@ -1103,7 +1104,6 @@ idPlayer::idPlayer() {
 	lastSavingThrowTime		= 0;
 
 	weapon					= NULL;
-
 	hud						= NULL;
 	mphud					= NULL;
 	objectiveSystem			= NULL;
@@ -9745,8 +9745,8 @@ void idPlayer::Killed( idEntity *inflictor, idEntity *attacker, int damage, cons
 	}
 
 // squirrel: Mode-agnostic buymenus
-	if ( gameLocal.isMultiplayer ) {
-		if( gameLocal.mpGame.IsBuyingAllowedInTheCurrentGameMode() )
+	if ( !gameLocal.isMultiplayer ) {
+		if( !gameLocal.mpGame.IsBuyingAllowedInTheCurrentGameMode() )
 		{
 			if( gameLocal.mpGame.GetGameState()->GetMPGameState() != WARMUP )
 			{
@@ -14075,6 +14075,16 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 	}
 
 	return weaponNum;
+}
+
+
+//Added Getter and Setter methods for currency
+int idInventory::GetCurrency(){
+	return currency;
+}
+
+int idInventory::SetCurrency(int newCurrency){
+	return newCurrency;
 }
 
 // RITUAL END

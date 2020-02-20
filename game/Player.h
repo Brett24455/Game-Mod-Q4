@@ -196,6 +196,10 @@ class idInventory {
 public:
 	int						maxHealth;
 	int						weapons;
+	//Declared currency and getter/setter
+	int						currency;
+	int						GetCurrency();
+	int						SetCurrency( int newCurrency );
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
 	int						carryOverWeapons;
