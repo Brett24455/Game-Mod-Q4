@@ -199,7 +199,7 @@ public:
 	//Declared currency and getter/setter
 	int						currency;
 	int						GetCurrency();
-	int						SetCurrency( int newCurrency );
+	void					SetCurrency( int newCurrency );
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
 	int						carryOverWeapons;

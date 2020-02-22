@@ -201,6 +201,7 @@ idInventory::Clear
 void idInventory::Clear( void ) {
 	maxHealth			= 0;
 	weapons				= 0;
+	currency			= 0; //Added
 	carryOverWeapons	= 0;
 	powerups			= 0;
 	armor				= 0;
@@ -14083,8 +14084,8 @@ int idInventory::GetCurrency(){
 	return currency;
 }
 
-int idInventory::SetCurrency(int newCurrency){
-	return newCurrency;
+void idInventory::SetCurrency(int newCurrency){
+	currency = newCurrency;
 }
 
 // RITUAL END

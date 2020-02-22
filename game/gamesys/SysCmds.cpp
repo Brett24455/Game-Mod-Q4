@@ -576,6 +576,8 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	}
 
 	common->Printf("Money: %i",inventory.currency);
+	//inventory.SetCurrency(inventory.currency + 500);
+	gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency + 500; //Makes a change to the player's current currency
 	if (inventory.currency != 0)
 			GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
 }
