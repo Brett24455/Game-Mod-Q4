@@ -570,16 +570,23 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 
 	player = gameLocal.GetLocalPlayer();
 	inventory = gameLocal.GetLocalPlayer()->inventory;
+	idStr wpnToBuy = args.Argv(1);
 	
 	if (!player || !gameLocal.CheatsOk()) {
 		return;
 	}
 
 	common->Printf("Money: %i",inventory.currency);
-	//inventory.SetCurrency(inventory.currency + 500);
-	gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency + 500; //Makes a change to the player's current currency
-	if (inventory.currency != 0)
-			GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	common->Printf("Weapon Name: " + wpnToBuy + "\n");
+	
+	if ((strcmp(wpnToBuy, "weapon_dmg") == 0) && (inventory.currency >= 100)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 100; //Makes a change to the player's current currency
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_dmg") == 0) && !(inventory.currency >= 100)) {
+		common->Printf("Insufficient funds.\n");
+	}
 }
 
 /*
