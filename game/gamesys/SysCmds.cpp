@@ -1158,6 +1158,60 @@ void Cmd_Spawn_f( const idCmdArgs &args ) {
 #endif // !_MPBETA
 }
 
+/*
+==================
+Cmd_StartWave_f
+==================
+*/
+//BEGINS ZOMBIE WAVE
+void Cmd_StartWave_f(const idCmdArgs &args){
+#ifndef _MPBETA
+	idStr		value;
+	//int			i;
+	float		yaw;
+	idVec3		org;
+	idPlayer	*player;
+	idDict		dict;
+	idStr		arg1;
+
+	arg1 = args.Argv(1);
+	gameLocal.Printf(arg1);
+	if ((strcmp(arg1, "now")== 0)){
+		player = gameLocal.GetLocalPlayer();
+		if (!player || !gameLocal.CheatsOk(false)) {
+			return;
+		}
+
+		yaw = player->viewAngles.yaw;
+
+		value = "monster_grunt";
+		dict.Set("classname", value);
+		dict.Set("angle", va("%f", yaw + 180));
+
+		org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(0, 0, 1);
+		dict.Set("origin", org.ToString());
+
+		/*for( i = 2; i < args.Argc() - 1; i += 2 ) {
+
+		key = args.Argv( i );
+		value = args.Argv( i + 1 );
+
+		dict.Set( key, value );
+		}*/
+
+		// RAVEN BEGIN
+		// kfuller: want to know the name of the entity I spawned
+		idEntity *newEnt = NULL;
+		gameLocal.SpawnEntityDef(dict, &newEnt);
+
+		if (newEnt)	{
+			gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+		}
+		// RAVEN END
+#endif // !_MPBETA
+	}
+}
+
 // RAVEN BEGIN
 // ddynerman: MP spawning command for performance testing
 /*
@@ -3078,6 +3132,9 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "teleport",				Cmd_Teleport_f,				CMD_FL_GAME|CMD_FL_CHEAT,	"teleports the player to an entity location", idGameLocal::ArgCompletion_EntityName );
 	cmdSystem->AddCommand( "trigger",				Cmd_Trigger_f,				CMD_FL_GAME|CMD_FL_CHEAT,	"triggers an entity", idGameLocal::ArgCompletion_EntityName );
 	cmdSystem->AddCommand( "spawn",					Cmd_Spawn_f,				CMD_FL_GAME|CMD_FL_CHEAT,	"spawns a game entity", idCmdSystem::ArgCompletion_Decl<DECL_ENTITYDEF> );
+
+	cmdSystem->AddCommand("start_wave",				Cmd_StartWave_f,			CMD_FL_GAME | CMD_FL_CHEAT, "Begins to spawn zombie waves");
+
 	cmdSystem->AddCommand( "damage",				Cmd_Damage_f,				CMD_FL_GAME|CMD_FL_CHEAT,	"apply damage to an entity", idGameLocal::ArgCompletion_EntityName );
 	cmdSystem->AddCommand( "remove",				Cmd_Remove_f,				CMD_FL_GAME|CMD_FL_CHEAT,	"removes an entity", idGameLocal::ArgCompletion_EntityName );
 	cmdSystem->AddCommand( "killMonsters",			Cmd_KillMonsters_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"removes all monsters" );
