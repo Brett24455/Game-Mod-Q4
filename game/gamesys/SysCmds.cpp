@@ -1173,7 +1173,13 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 	idPlayer	*player;
 	idDict		dict;
 	idStr		arg1;
+	int			numSpawns;
+	int			spawnCoolDown;
+	int			spawnDistance;
 
+	numSpawns = 2;
+	spawnCoolDown = 100;
+	spawnDistance = 360;
 	arg1 = args.Argv(1);
 	gameLocal.Printf(arg1);
 	if ((strcmp(arg1, "now")== 0)){
@@ -1188,9 +1194,6 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 		dict.Set("classname", value);
 		dict.Set("angle", va("%f", yaw + 180));
 
-		org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(0, 0, 1);
-		dict.Set("origin", org.ToString());
-
 		/*for( i = 2; i < args.Argc() - 1; i += 2 ) {
 
 		key = args.Argv( i );
@@ -1201,12 +1204,29 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 
 		// RAVEN BEGIN
 		// kfuller: want to know the name of the entity I spawned
-		idEntity *newEnt = NULL;
-		gameLocal.SpawnEntityDef(dict, &newEnt);
+		for (numSpawns; numSpawns > 0;){
+			
+			if (spawnCoolDown){
+				spawnCoolDown--;
+				//gameLocal.Printf("%i",spawnCoolDown);
+			}
 
-		if (newEnt)	{
-			gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+			if (!spawnCoolDown){
+				org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * spawnDistance + idVec3(0, 0, 1);
+				dict.Set("origin", org.ToString());
+
+				idEntity *newEnt = NULL;
+				spawnCoolDown = 1000;
+				gameLocal.SpawnEntityDef(dict, &newEnt);
+				numSpawns--;
+				spawnDistance += 10;
+
+				if (newEnt)	{
+					gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+				}
+			}
 		}
+		
 		// RAVEN END
 #endif // !_MPBETA
 	}
