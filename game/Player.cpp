@@ -199,6 +199,7 @@ idInventory::Clear
 ==============
 */
 void idInventory::Clear( void ) {
+	zombieWave			= 0;
 	maxHealth			= 0;
 	weapons				= 0;
 	carryOverWeapons	= 0;
@@ -336,6 +337,7 @@ void idInventory::RestoreInventory( idPlayer *owner, const idDict &dict ) {
 	//Clear();
 
 	// health/armor
+	zombieWave		= dict.GetInt("zombieWave", "0");
 	maxHealth		= dict.GetInt( "maxhealth", "100" );
 	armor			= dict.GetInt( "armor", "50" );
 	maxarmor		= dict.GetInt( "maxarmor", "100" );
