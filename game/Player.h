@@ -197,6 +197,10 @@ public:
 	int						zombieWave;
 	int						maxHealth;
 	int						weapons;
+	//Declared currency and getter/setter
+	int						currency;
+	int						GetCurrency();
+	void					SetCurrency( int newCurrency );
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
 	int						carryOverWeapons;

@@ -19,6 +19,7 @@ const char *idMultiplayerGame::MPGuis[] = {
 	"guis/mpmsgmode.gui",
 	"guis/netmenu.gui",
 	"guis/mphud.gui",
+	"guis/buymenu.gui",
 	NULL
 };
 
@@ -354,7 +355,7 @@ void idMultiplayerGame::Clear() {
 	pureReady = false;
 	scoreBoard = NULL;
 	buyMenu = NULL;
-	isBuyingAllowedRightNow = false;
+	isBuyingAllowedRightNow = false; 
 	statSummary = NULL;
 	mainGui = NULL;
 	msgmodeGui = NULL;
@@ -9066,11 +9067,18 @@ void idMultiplayerGame::OpenLocalBuyMenu( void )
 	//		return;
 	//}
 
-	if ( currentMenu == 4 )
+	if (currentMenu == 4){
+		common->Printf("Cant open buy menu");
 		return; // Already open
+	}
 
-	gameLocal.sessionCommand = "game_startmenu";
+	common->Printf("Current Menu: " + currentMenu);
+	common->Printf("\nCan access\n");
+	//gameLocal.sessionCommand = "game_startmenu"; //IMPORTANT
 	gameLocal.mpGame.nextMenu = 4;
+	//gameLocal.mpGame.StartMenu();
+	//gameLocal.sessionCommand = "game_startmenu";
+	common->Printf("Current Menu: " + currentMenu);
 }
 
 /*	
@@ -9117,9 +9125,9 @@ idMultiplayerGame::IsBuyingAllowedInTheCurrentGameMode
 ================
 */
 bool idMultiplayerGame::IsBuyingAllowedInTheCurrentGameMode( void ) {
-	if ( !gameLocal.isMultiplayer ) {
-		return false;
-	}
+	//if ( !gameLocal.isMultiplayer ) { Removed
+		return true; //Changed from false
+	//}
 
 	if ( gameLocal.gameType != GAME_TOURNEY ) {
 		return gameLocal.serverInfo.GetBool( "si_isBuyingEnabled" );

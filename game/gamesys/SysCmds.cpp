@@ -557,6 +557,143 @@ void Cmd_Give_f( const idCmdArgs &args ) {
 
 /*
 ==================
+Cmd_Buy_f
+
+Buy an item based on z currency
+==================
+*/
+
+//CONSOLE BUY MENU/SHOP
+void Cmd_Buy_f(const idCmdArgs &args) {
+	int i;
+	idPlayer	*player;
+	idInventory inventory;
+
+	player = gameLocal.GetLocalPlayer();
+	inventory = gameLocal.GetLocalPlayer()->inventory;
+	idStr wpnToBuy = args.Argv(1);
+	
+	if (!player || !gameLocal.CheatsOk()) {
+		return;
+	}
+
+	common->Printf("Money: %i",inventory.currency);
+	common->Printf("Weapon Name: " + wpnToBuy + "\n");
+
+	if ((strcmp(wpnToBuy, "devpoints") == 0)){
+		gameLocal.GetLocalPlayer()->inventory.currency = 50000;
+	}
+	
+	//DMG - Thunder Gun
+	if ((strcmp(wpnToBuy, "weapon_dmg") == 0) && (inventory.currency >= 20000)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 20000; //Makes a change to the player's current currency
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_dmg") == 0) && !(inventory.currency >= 20000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Machine gun - KN44
+	else if ((strcmp(wpnToBuy, "weapon_machinegun") == 0) && (inventory.currency >= 1500)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 1500;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_machinegun") == 0) && !(inventory.currency >= 1500)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Shotgun - Haymaker 12
+	else if ((strcmp(wpnToBuy, "weapon_shotgun") == 0) && (inventory.currency >= 2000)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_shotgun") == 0) && !(inventory.currency >= 2000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Hyperblaster - LCAR 9
+	else if ((strcmp(wpnToBuy, "weapon_hyperblaster") == 0) && (inventory.currency >= 800)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 800;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_hyperblaster") == 0) && !(inventory.currency >= 800)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Nailgun - Ray gun
+	else if ((strcmp(wpnToBuy, "weapon_nailgun") == 0) && (inventory.currency >= 5000)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 5000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_nailgun") == 0) && !(inventory.currency >= 5000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Railgun - Drakon
+	else if ((strcmp(wpnToBuy, "weapon_railgun") == 0) && (inventory.currency >= 3000)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 3000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_railgun") == 0) && !(inventory.currency >= 3000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Lightning gun - Wunderwaffe DG2
+	else if ((strcmp(wpnToBuy, "weapon_lightninggun") == 0) && (inventory.currency >= 10000)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		//Get the weapon mod to spawn here too.
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 10000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_lightninggun") == 0) && !(inventory.currency >= 10000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Rocket Launcher - L4 Siege
+	else if ((strcmp(wpnToBuy, "weapon_rocketlauncher") == 0) && (inventory.currency >= 6000)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 6000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_rocketlauncher") == 0) && !(inventory.currency >= 6000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Grenade Launcher - War Machine
+	else if ((strcmp(wpnToBuy, "weapon_grenadelauncher") == 0) && (inventory.currency >= 3500)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 3500;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_grenadelauncher") == 0) && !(inventory.currency >= 3500)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Ammo
+	else if ((strcmp(wpnToBuy, "ammo") == 0) && (inventory.currency >= 1000)){
+		for (i = 0; i < MAX_AMMOTYPES; i++) {
+			player->inventory.ammo[i] = player->inventory.MaxAmmoForAmmoClass(player, rvWeapon::GetAmmoNameForIndex(i));		
+		}
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 1000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "ammo") == 0) && !(inventory.currency >= 1000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Health
+	else if ((strcmp(wpnToBuy, "health") == 0) && (inventory.currency >= 500)){
+		player->health = player->inventory.maxHealth;
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 500;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "health") == 0) && !(inventory.currency >= 500)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Nothing
+	else{
+		common->Printf("This does not exist within the shop.\n");
+	}
+}
+
+/*
+==================
 Cmd_CenterView_f
 
 Centers the players pitch
@@ -3002,10 +3139,13 @@ void Cmd_AddIcon_f( const idCmdArgs& args ) {
 // squirrel: Mode-agnostic buymenus
 void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
-	if ( player && player->CanBuy() )
-	{
+	/*if ( player && player->CanBuy() )
+	{*/  
 		gameLocal.mpGame.OpenLocalBuyMenu();
-	}
+	/*}
+	else { //Added else statement
+		common->Printf("Cant open buy menu");
+	}*/
 }
 
 void Cmd_BuyItem_f( const idCmdArgs& args ) {
@@ -3144,6 +3284,9 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "addChatLine",			Cmd_AddChatLine_f,			CMD_FL_GAME,				"internal use - core to game chat lines" );
 	cmdSystem->AddCommand( "gameKick",				Cmd_Kick_f,					CMD_FL_GAME,				"same as kick, but recognizes player names" );
 	cmdSystem->AddCommand( "give",					Cmd_Give_f,					CMD_FL_GAME|CMD_FL_CHEAT,	"gives one or more items" );
+
+	cmdSystem->AddCommand("buy",					Cmd_Buy_f,					CMD_FL_GAME | CMD_FL_CHEAT, "gives one or more items");
+
 	cmdSystem->AddCommand( "centerview",			Cmd_CenterView_f,			CMD_FL_GAME,				"centers the view" );
 	cmdSystem->AddCommand( "god",					Cmd_God_f,					CMD_FL_GAME|CMD_FL_CHEAT,	"enables god mode" );
 	cmdSystem->AddCommand( "undying",				Cmd_Undying_f,				CMD_FL_GAME|CMD_FL_CHEAT,	"enables undying mode (take damage down to 1 health, but do not die)" );
