@@ -188,12 +188,12 @@ stateResult_t rvWeaponRailgun::State_Fire ( const stateParms_t& parms ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack ( false, 1, spread, 0, 1.0f );
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
+			//PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	Changed to ignore animation
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		
 			if ( ( gameLocal.isMultiplayer && gameLocal.time >= nextAttackTime ) || 
-				 ( !gameLocal.isMultiplayer && ( AnimDone ( ANIMCHANNEL_ALL, 2 ) ) ) ) {
+				 ( !gameLocal.isMultiplayer ) ) { //Removed "&& ( AnimDone ( ANIMCHANNEL_ALL, 2 )"
 				SetState ( "Idle", 0 );
 				return SRESULT_DONE;
 			}		
