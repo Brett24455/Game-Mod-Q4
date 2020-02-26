@@ -672,7 +672,17 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_rocketlauncher") == 0) && !(inventory.currency >= 2000)) {
+	else if ((strcmp(wpnToBuy, "weapon_napalmgun") == 0) && !(inventory.currency >= 2000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Juggernog - Gives the player twice as much health
+	else if ((strcmp(wpnToBuy, "juggernog") == 0) && (inventory.currency >= 2500)){
+		gameLocal.GetLocalPlayer()->inventory.maxHealth = 200;
+		player->health = player->inventory.maxHealth;
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2500;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "juggernog") == 0) && !(inventory.currency >= 2500)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Ammo
