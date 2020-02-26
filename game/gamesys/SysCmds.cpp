@@ -666,6 +666,15 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "weapon_grenadelauncher") == 0) && !(inventory.currency >= 3500)) {
 		common->Printf("Insufficient funds.\n");
 	}
+	//Napalm launcher - China Lake
+	else if ((strcmp(wpnToBuy, "weapon_napalmgun") == 0) && (inventory.currency >= 2000)){
+		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "weapon_rocketlauncher") == 0) && !(inventory.currency >= 2000)) {
+		common->Printf("Insufficient funds.\n");
+	}
 	//Ammo
 	else if ((strcmp(wpnToBuy, "ammo") == 0) && (inventory.currency >= 1000)){
 		for (i = 0; i < MAX_AMMOTYPES; i++) {
@@ -1317,7 +1326,12 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 
 
 	wave = gameLocal.GetLocalPlayer()->inventory.zombieWave;
-	numSpawns = 2 + (1 * wave);
+
+	if (wave < 10)
+		numSpawns = 2 + (1 * wave);
+	else
+		numSpawns = 12;
+
 	gameLocal.GetLocalPlayer()->inventory.zombieWave = gameLocal.GetLocalPlayer()->inventory.zombieWave + 1; //Increase the wave in the players inventory (after numspawns has been decided)
 	gameLocal.Printf("Current Wave: %i", gameLocal.GetLocalPlayer()->inventory.zombieWave);
 	spawnCoolDown = 100;

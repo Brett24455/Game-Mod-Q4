@@ -196,6 +196,7 @@ rvMonsterGrunt::OnDeath
 */
 void rvMonsterGrunt::OnDeath ( void ) {
 	RageStop ( );
+	gameLocal.GetLocalPlayer()->inventory.currency = gameLocal.GetLocalPlayer()->inventory.currency + 200;
 	return idAI::OnDeath ( );
 }
 
