@@ -202,6 +202,7 @@ public:
 	int						GetCurrency();
 	void					SetCurrency( int newCurrency );
 	bool					doubletap;
+	int						totalHits;
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
 	int						carryOverWeapons;

@@ -694,12 +694,22 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "staminup") == 0) && !(inventory.currency >= 2000)) {
 		common->Printf("Insufficient funds.\n");
 	}
+	//Double Tap - Doubles all weapon fire rates
 	else if ((strcmp(wpnToBuy, "doubletap") == 0) && (inventory.currency >= 2000)){
 		gameLocal.GetLocalPlayer()->inventory.doubletap = 1;
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
 		common->Printf("Purchased!\n");
 	}
 	else if ((strcmp(wpnToBuy, "doubletap") == 0) && !(inventory.currency >= 2000)) {
+		common->Printf("Insufficient funds.\n");
+	}
+	//Double Double Tap - Doubles bullets for kinetic weapons only
+	else if ((strcmp(wpnToBuy, "doubledoubletap") == 0) && (inventory.currency >= 2000)){
+		gameLocal.GetLocalPlayer()->inventory.totalHits = 2;
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "doubledoubletap") == 0) && !(inventory.currency >= 2000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Ammo

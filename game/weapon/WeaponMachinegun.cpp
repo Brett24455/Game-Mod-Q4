@@ -230,13 +230,12 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 			if (gameLocal.GetLocalPlayer()->inventory.doubletap){
 				if (wsfl.zoom) {
 					nextAttackTime = gameLocal.time + ((altFireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
-					Attack(true, 1, spreadZoom, 0, 1.0f);
+					Attack(true, gameLocal.GetLocalPlayer()->inventory.totalHits, spreadZoom, 0, 1.0f);
 					fireHeld = true;
 				}
 				else {
 					nextAttackTime = gameLocal.time + ((fireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
-					gameLocal.Printf("Fire rate: %i", fireRate);
-					Attack(false, 1, spread, 0, 1.0f);
+					Attack(false, gameLocal.GetLocalPlayer()->inventory.totalHits, spread, 0, 1.0f);
 				}
 				PlayAnim(ANIMCHANNEL_ALL, "fire", 0);
 				return SRESULT_STAGE(STAGE_WAIT);
@@ -244,13 +243,12 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 			else{
 				if (wsfl.zoom) {
 					nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-					Attack(true, 1, spreadZoom, 0, 1.0f);
+					Attack(true, gameLocal.GetLocalPlayer()->inventory.totalHits, spreadZoom, 0, 1.0f);
 					fireHeld = true;
 				}
 				else {
 					nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-					gameLocal.Printf("Fire rate: %i", fireRate);
-					Attack(false, 1, spread, 0, 1.0f);
+					Attack(false, gameLocal.GetLocalPlayer()->inventory.totalHits, spread, 0, 1.0f);
 				}
 				PlayAnim(ANIMCHANNEL_ALL, "fire", 0);
 				return SRESULT_STAGE(STAGE_WAIT);
