@@ -399,17 +399,35 @@ stateResult_t WeaponNapalmGun::State_Fire( const stateParms_t& parms ) {
 				PlayAnim ( ANIMCHANNEL_ALL, "idle", parms.blendFrames );
 				//fireHeld = true;
 			} else {
-				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( false, 1, spread, 0, 1.0f );
+				if (gameLocal.GetLocalPlayer()->inventory.doubletap){
+					nextAttackTime = gameLocal.time + ((fireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
+					Attack(false, 1, spread, 0, 1.0f);
 
-				int animNum = viewModel->GetAnimator()->GetAnim ( "fire" );
-				if ( animNum ) {
-					idAnim* anim;
-					anim = (idAnim*)viewModel->GetAnimator()->GetAnim ( animNum );				
-					anim->SetPlaybackRate ( (float)anim->Length() / (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE )) );
+					int animNum = viewModel->GetAnimator()->GetAnim("fire");
+					if (animNum) {
+						idAnim* anim;
+						anim = (idAnim*)viewModel->GetAnimator()->GetAnim(animNum);
+						anim->SetPlaybackRate((float)anim->Length() / (fireRate * owner->PowerUpModifier(PMOD_FIRERATE)));
+					}
+
+					//PlayAnim(ANIMCHANNEL_ALL, "fire", parms.blendFrames);
 				}
+				else{
+					nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+					Attack(false, 1, spread, 0, 1.0f);
 
-				PlayAnim ( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
+					int animNum = viewModel->GetAnimator()->GetAnim("fire");
+					if (animNum) {
+						idAnim* anim;
+						anim = (idAnim*)viewModel->GetAnimator()->GetAnim(animNum);
+						anim->SetPlaybackRate((float)anim->Length() / (fireRate * owner->PowerUpModifier(PMOD_FIRERATE)));
+					}
+
+					PlayAnim(ANIMCHANNEL_ALL, "fire", parms.blendFrames);
+				}
+				
+
+				
 			}
 
 			previousAmmo = AmmoInClip();

@@ -107,9 +107,16 @@ bool rvWeaponBlaster::UpdateAttack ( void ) {
 	if ( wsfl.attack && gameLocal.time >= nextAttackTime ) {
 		// Save the time which the fire button was pressed
 		if ( fireHeldTime == 0 ) {		
-			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			fireHeldTime   = gameLocal.time;
-			viewModel->SetShaderParm ( BLASTER_SPARM_CHARGEGLOW, chargeGlow[0] );
+			if (gameLocal.GetLocalPlayer()->inventory.doubletap){
+				nextAttackTime = gameLocal.time + ((fireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
+				fireHeldTime = gameLocal.time;
+				viewModel->SetShaderParm(BLASTER_SPARM_CHARGEGLOW, chargeGlow[0]);
+			}
+			else{
+				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+				fireHeldTime = gameLocal.time;
+				viewModel->SetShaderParm(BLASTER_SPARM_CHARGEGLOW, chargeGlow[0]);
+			}
 		}
 	}		
 

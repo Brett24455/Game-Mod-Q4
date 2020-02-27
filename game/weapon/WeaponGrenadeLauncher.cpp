@@ -144,10 +144,19 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
-			PlayAnim ( ANIMCHANNEL_ALL, GetFireAnim(), 0 );	
-			return SRESULT_STAGE ( STAGE_WAIT );
+			if (gameLocal.GetLocalPlayer()->inventory.doubletap){
+				nextAttackTime = gameLocal.time + ((fireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
+				Attack(false, 1, spread, 0, 1.0f);
+				PlayAnim(ANIMCHANNEL_ALL, GetFireAnim(), 0);
+				return SRESULT_STAGE(STAGE_WAIT);
+			}
+			else{
+				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+				Attack(false, 1, spread, 0, 1.0f);
+				PlayAnim(ANIMCHANNEL_ALL, GetFireAnim(), 0);
+				return SRESULT_STAGE(STAGE_WAIT);
+			}
+			
 	
 		case STAGE_WAIT:		
 			if ( wsfl.attack && gameLocal.time >= nextAttackTime && AmmoInClip() && !wsfl.lowerWeapon ) {

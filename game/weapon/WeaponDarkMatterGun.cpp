@@ -311,12 +311,23 @@ stateResult_t rvWeaponDarkMatterGun::State_Fire ( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			StopRings ( );
+			if (gameLocal.GetLocalPlayer()->inventory.doubletap){
+				StopRings();
 
-			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
-			return SRESULT_STAGE ( STAGE_WAIT );
+				nextAttackTime = gameLocal.time + ((fireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
+				Attack(false, 1, spread, 0, 1.0f);
+				//PlayAnim(ANIMCHANNEL_ALL, "fire", 0);
+				return SRESULT_STAGE(STAGE_WAIT);
+			}
+			else{
+				StopRings();
+
+				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+				Attack(false, 1, spread, 0, 1.0f);
+				PlayAnim(ANIMCHANNEL_ALL, "fire", 0);
+				return SRESULT_STAGE(STAGE_WAIT);
+			}
+			
 	
 		case STAGE_WAIT:		
 			if ( AnimDone ( ANIMCHANNEL_ALL, 2 ) || (gameLocal.isMultiplayer && gameLocal.time >= nextAttackTime) ) {
