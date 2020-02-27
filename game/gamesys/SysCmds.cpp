@@ -694,6 +694,14 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "staminup") == 0) && !(inventory.currency >= 2000)) {
 		common->Printf("Insufficient funds.\n");
 	}
+	else if ((strcmp(wpnToBuy, "doubletap") == 0) && (inventory.currency >= 2000)){
+		gameLocal.GetLocalPlayer()->inventory.doubletap = 1;
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "doubletap") == 0) && !(inventory.currency >= 2000)) {
+		common->Printf("Insufficient funds.\n");
+	}
 	//Ammo
 	else if ((strcmp(wpnToBuy, "ammo") == 0) && (inventory.currency >= 1000)){
 		for (i = 0; i < MAX_AMMOTYPES; i++) {

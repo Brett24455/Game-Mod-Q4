@@ -523,6 +523,7 @@ stateResult_t rvWeaponBlaster::State_Reload(const stateParms_t& parms) {
 		return SRESULT_STAGE(STAGE_WAIT);
 
 	case STAGE_WAIT:
+
 		if (AnimDone(ANIMCHANNEL_ALL, 4)) {
 			AddToClip(ClipSize());
 			SetState("Idle", 4);

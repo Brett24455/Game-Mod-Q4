@@ -203,6 +203,7 @@ void idInventory::Clear( void ) {
 	maxHealth			= 0;
 	weapons				= 0;
 	currency			= 0; //Added
+	doubletap			= 0; //Added
 	carryOverWeapons	= 0;
 	powerups			= 0;
 	armor				= 0;
@@ -341,6 +342,7 @@ void idInventory::RestoreInventory( idPlayer *owner, const idDict &dict ) {
 	zombieWave		= dict.GetInt("zombieWave", "0");
 	maxHealth		= dict.GetInt( "maxhealth", "100" );
 	currency		= dict.GetInt( "currency", "500" );
+	doubletap		= dict.GetBool("doubletap", "0");
 	armor			= dict.GetInt( "armor", "50" );
 	maxarmor		= dict.GetInt( "maxarmor", "100" );
 	
@@ -5408,7 +5410,7 @@ void idPlayer::Reload( void ) {
  	if ( gameLocal.isClient || spectating || gameLocal.inCinematic || influenceActive || !weapon ) {
  		return;
  	}
-
+	
 	weapon->Reload();
 }
 

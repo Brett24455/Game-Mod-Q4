@@ -166,7 +166,7 @@ stateResult_t rvWeaponMachinegun::State_Idle( const stateParms_t& parms ) {
 	enum {
 		STAGE_INIT,
 		STAGE_WAIT,
-	};	
+	};
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			if ( !AmmoAvailable ( ) ) {
@@ -224,18 +224,38 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 		STAGE_INIT,
 		STAGE_WAIT,
 	};	
+
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			if ( wsfl.zoom ) {
-				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( true, 1, spreadZoom, 0, 1.0f );
-				fireHeld = true;
-			} else {
-				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( false, 1, spread, 0, 1.0f );
+			if (gameLocal.GetLocalPlayer()->inventory.doubletap){
+				if (wsfl.zoom) {
+					nextAttackTime = gameLocal.time + ((altFireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
+					Attack(true, 1, spreadZoom, 0, 1.0f);
+					fireHeld = true;
+				}
+				else {
+					nextAttackTime = gameLocal.time + ((fireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
+					gameLocal.Printf("Fire rate: %i", fireRate);
+					Attack(false, 1, spread, 0, 1.0f);
+				}
+				PlayAnim(ANIMCHANNEL_ALL, "fire", 0);
+				return SRESULT_STAGE(STAGE_WAIT);
 			}
-			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
-			return SRESULT_STAGE ( STAGE_WAIT );
+			else{
+				if (wsfl.zoom) {
+					nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+					Attack(true, 1, spreadZoom, 0, 1.0f);
+					fireHeld = true;
+				}
+				else {
+					nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+					gameLocal.Printf("Fire rate: %i", fireRate);
+					Attack(false, 1, spread, 0, 1.0f);
+				}
+				PlayAnim(ANIMCHANNEL_ALL, "fire", 0);
+				return SRESULT_STAGE(STAGE_WAIT);
+			}
+			
 	
 		case STAGE_WAIT:		
 			if ( !fireHeld && wsfl.attack && gameLocal.time >= nextAttackTime && AmmoInClip() && !wsfl.lowerWeapon ) {
