@@ -230,7 +230,7 @@ stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 			if (gameLocal.GetLocalPlayer()->inventory.doubletap){
 				SpinUp();
 				nextAttackTime = gameLocal.time + ((fireRate / 2) * owner->PowerUpModifier(PMOD_FIRERATE));
-				Attack(false, 1, spread, 0, 1.0f);
+				Attack(false, gameLocal.GetLocalPlayer()->inventory.totalHits, spread, 0, 1.0f);
 				if (ClipSize()) {
 					viewModel->SetShaderParm(HYPERBLASTER_SPARM_BATTERY, (float)AmmoInClip() / ClipSize());
 				}
@@ -243,7 +243,7 @@ stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 			else{
 				SpinUp();
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-				Attack(false, 1, spread, 0, 1.0f);
+				Attack(false, gameLocal.GetLocalPlayer()->inventory.totalHits, spread, 0, 1.0f);
 				if (ClipSize()) {
 					viewModel->SetShaderParm(HYPERBLASTER_SPARM_BATTERY, (float)AmmoInClip() / ClipSize());
 				}
