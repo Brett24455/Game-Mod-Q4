@@ -205,6 +205,7 @@ void idInventory::Clear( void ) {
 	currency			= 0; //Added
 	doubletap			= 0; //Added
 	totalHits			= 0; //Added
+	speedcola			= 0; //Added
 	carryOverWeapons	= 0;
 	powerups			= 0;
 	armor				= 0;
@@ -345,6 +346,7 @@ void idInventory::RestoreInventory( idPlayer *owner, const idDict &dict ) {
 	currency		= dict.GetInt( "currency", "500" );
 	doubletap		= dict.GetBool( "doubletap", "0" );
 	totalHits		= dict.GetInt( "totalHits", "1" );
+	speedcola		= dict.GetBool("speedcola", "0");
 	armor			= dict.GetInt( "armor", "50" );
 	maxarmor		= dict.GetInt( "maxarmor", "100" );
 	

@@ -203,6 +203,7 @@ public:
 	void					SetCurrency( int newCurrency );
 	bool					doubletap;
 	int						totalHits;
+	bool					speedcola;
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
 	int						carryOverWeapons;

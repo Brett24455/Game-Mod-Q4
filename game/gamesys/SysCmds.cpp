@@ -712,6 +712,15 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "doubledoubletap") == 0) && !(inventory.currency >= 2000)) {
 		common->Printf("Insufficient funds.\n");
 	}
+	//Speed Cola - Removes reload animations for a bottomless magazine effect
+	else if ((strcmp(wpnToBuy, "speedcola") == 0) && (inventory.currency >= 3000)){
+		gameLocal.GetLocalPlayer()->inventory.speedcola = 1;
+		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 3000;
+		common->Printf("Purchased!\n");
+	}
+	else if ((strcmp(wpnToBuy, "speedcola") == 0) && !(inventory.currency >= 3000)) {
+		common->Printf("Insufficient funds.\n");
+	}
 	//Ammo
 	else if ((strcmp(wpnToBuy, "ammo") == 0) && (inventory.currency >= 1000)){
 		for (i = 0; i < MAX_AMMOTYPES; i++) {
