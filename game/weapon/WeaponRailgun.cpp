@@ -231,7 +231,8 @@ stateResult_t rvWeaponRailgun::State_Reload ( const stateParms_t& parms ) {
 			}
 						
 			SetStatus ( WP_RELOAD );
-			PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
+			if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+				PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 			
 		case STAGE_WAIT:

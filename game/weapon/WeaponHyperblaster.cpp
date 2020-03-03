@@ -292,7 +292,8 @@ stateResult_t rvWeaponHyperblaster::State_Reload ( const stateParms_t& parms ) {
 			viewModel->SetShaderParm ( HYPERBLASTER_SPARM_BATTERY, 0 );
 			
 			SetStatus ( WP_RELOAD );
-			PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
+			if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+				PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 			
 		case STAGE_WAIT:

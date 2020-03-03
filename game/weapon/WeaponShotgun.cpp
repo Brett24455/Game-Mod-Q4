@@ -221,10 +221,12 @@ stateResult_t rvWeaponShotgun::State_Reload ( const stateParms_t& parms ) {
 			
 			SetStatus ( WP_RELOAD );
 			
-			if ( mods & SHOTGUN_MOD_AMMO ) {				
-				PlayAnim ( ANIMCHANNEL_ALL, "reload_clip", parms.blendFrames );
+			if ( mods & SHOTGUN_MOD_AMMO ) {
+				if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+					PlayAnim ( ANIMCHANNEL_ALL, "reload_clip", parms.blendFrames );
 			} else {
-				PlayAnim ( ANIMCHANNEL_ALL, "reload_start", parms.blendFrames );
+				if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+					PlayAnim ( ANIMCHANNEL_ALL, "reload_start", parms.blendFrames );
 				return SRESULT_STAGE ( STAGE_RELOADSTARTWAIT );
 			}
 			return SRESULT_STAGE ( STAGE_WAIT );
@@ -255,7 +257,8 @@ stateResult_t rvWeaponShotgun::State_Reload ( const stateParms_t& parms ) {
 			if ( (wsfl.attack && AmmoInClip() ) || AmmoAvailable ( ) <= AmmoInClip ( ) || AmmoInClip() == ClipSize() ) {
 				return SRESULT_STAGE ( STAGE_RELOADDONE );
 			}
-			PlayAnim ( ANIMCHANNEL_ALL, "reload_loop", 0 );
+			if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+				PlayAnim ( ANIMCHANNEL_ALL, "reload_loop", 0 );
 			return SRESULT_STAGE ( STAGE_RELOADLOOPWAIT );
 			
 		case STAGE_RELOADLOOPWAIT:
@@ -274,7 +277,8 @@ stateResult_t rvWeaponShotgun::State_Reload ( const stateParms_t& parms ) {
 		
 		case STAGE_RELOADDONE:
 			NetEndReload ( );
-			PlayAnim ( ANIMCHANNEL_ALL, "reload_end", 0 );
+			if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+				PlayAnim ( ANIMCHANNEL_ALL, "reload_end", 0 );
 			return SRESULT_STAGE ( STAGE_RELOADDONEWAIT );
 
 		case STAGE_RELOADDONEWAIT:

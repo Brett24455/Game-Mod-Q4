@@ -360,7 +360,8 @@ stateResult_t rvWeaponDarkMatterGun::State_Reload ( const stateParms_t& parms ) 
 			StartRings ( true );
 			
 			SetStatus ( WP_RELOAD );
-			PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
+			if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+				PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 			
 		case STAGE_WAIT:

@@ -765,7 +765,8 @@ stateResult_t rvWeaponNailgun::State_Reload ( const stateParms_t& parms ) {
 			return SRESULT_STAGE( STAGE_RELOAD );
 			
 		case STAGE_RELOAD:
-			PlayAnim( ANIMCHANNEL_LEGS, "reload", parms.blendFrames );
+			if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+				PlayAnim( ANIMCHANNEL_LEGS, "reload", parms.blendFrames );
 			return SRESULT_STAGE( STAGE_RELOADWAIT );
 			
 		case STAGE_RELOADWAIT:
@@ -815,7 +816,8 @@ stateResult_t rvWeaponNailgun::State_Reload ( const stateParms_t& parms ) {
 			return SRESULT_WAIT;
 		
 		case STAGE_RELOADDONE:
-			PlayAnim ( ANIMCHANNEL_LEGS, "reload_clip1finish", 0 );
+			if (!gameLocal.GetLocalPlayer()->inventory.speedcola)
+				PlayAnim ( ANIMCHANNEL_LEGS, "reload_clip1finish", 0 );
 			return SRESULT_STAGE ( STAGE_RELOADDONEWAIT );
 		
 		case STAGE_RELOADDONEWAIT:
