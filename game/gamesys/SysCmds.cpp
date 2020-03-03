@@ -580,99 +580,131 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	common->Printf("Money: %i",inventory.currency);
 	common->Printf("Weapon Name: " + wpnToBuy + "\n");
 
+	//Devpoints
 	if ((strcmp(wpnToBuy, "devpoints") == 0)){
 		gameLocal.GetLocalPlayer()->inventory.currency = 50000;
 	}
-	
+	//buy list
+	else if ((strcmp(wpnToBuy, "list") == 0)){
+		common->Printf("buy weaponlist\t\tDisplays buyable weapon list\n");
+		common->Printf("buy perklist\t\tDisplays buyable perk list\n");
+		common->Printf("buy ammo\t\t\tFills ammo to max for all guns\n");
+		common->Printf("buy health\t\t\tHeal to full health\n");
+	}
+	//weapon list
+	else if ((strcmp(wpnToBuy, "weaponlist") == 0)){
+		common->Printf("Guns\t\t\tPrice\n");
+		common->Printf("-----------------------------------\n");
+		common->Printf("L-car_9\t\t\t800\n");
+		common->Printf("kn44\t\t\t1500\n");
+		common->Printf("haymaker_12\t\t2000\n");
+		common->Printf("china_lake\t\t2000\n");
+		common->Printf("drakon\t\t\t3000\n");
+		common->Printf("war_machine\t\t3500\n");
+		common->Printf("raygun\t\t\t5000\n");
+		common->Printf("L4_siege\t\t6000\n");
+		common->Printf("wunderwaffe\t\t10000\n");
+		common->Printf("thundergun\t\t20000\n");
+	}
+	//perk list
+	else if ((strcmp(wpnToBuy, "perklist") == 0)){
+		common->Printf("Perks\t\t\t\tPrice\n");
+		common->Printf("-----------------------------------\n");
+		common->Printf("juggernog\t\t\t2500\n");
+		common->Printf("staminup\t\t\t2000\n");
+		common->Printf("doubletap\t\t\t2000\n");
+		common->Printf("doubledoubletap\t\t2000\n");
+		common->Printf("speedcola\t\t\t3000\n");
+	}
 	//DMG - Thunder Gun
-	if ((strcmp(wpnToBuy, "weapon_dmg") == 0) && (inventory.currency >= 20000)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "thundergun") == 0) && (inventory.currency >= 20000)){
+		GiveStuffToPlayer(player, "weapon_dmg", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 20000; //Makes a change to the player's current currency
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_dmg") == 0) && !(inventory.currency >= 20000)) {
+	else if ((strcmp(wpnToBuy, "thundergun") == 0) && !(inventory.currency >= 20000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Machine gun - KN44
-	else if ((strcmp(wpnToBuy, "weapon_machinegun") == 0) && (inventory.currency >= 1500)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "kn44") == 0) && (inventory.currency >= 1500)){
+		GiveStuffToPlayer(player, "weapon_machinegun", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 1500;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_machinegun") == 0) && !(inventory.currency >= 1500)) {
+	else if ((strcmp(wpnToBuy, "kn44") == 0) && !(inventory.currency >= 1500)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Shotgun - Haymaker 12
-	else if ((strcmp(wpnToBuy, "weapon_shotgun") == 0) && (inventory.currency >= 2000)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "haymaker_12") == 0) && (inventory.currency >= 2000)){
+		GiveStuffToPlayer(player, "weapon_shotgun", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_shotgun") == 0) && !(inventory.currency >= 2000)) {
+	else if ((strcmp(wpnToBuy, "haymaker_12") == 0) && !(inventory.currency >= 2000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Hyperblaster - LCAR 9
-	else if ((strcmp(wpnToBuy, "weapon_hyperblaster") == 0) && (inventory.currency >= 800)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "L-car_9") == 0) && (inventory.currency >= 800)){
+		GiveStuffToPlayer(player, "weapon_hyperblaster", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 800;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_hyperblaster") == 0) && !(inventory.currency >= 800)) {
+	else if ((strcmp(wpnToBuy, "L-car_9") == 0) && !(inventory.currency >= 800)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Nailgun - Ray gun
-	else if ((strcmp(wpnToBuy, "weapon_nailgun") == 0) && (inventory.currency >= 5000)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "raygun") == 0) && (inventory.currency >= 5000)){
+		GiveStuffToPlayer(player, "weapon_nailgun", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 5000;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_nailgun") == 0) && !(inventory.currency >= 5000)) {
+	else if ((strcmp(wpnToBuy, "raygun") == 0) && !(inventory.currency >= 5000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Railgun - Drakon
-	else if ((strcmp(wpnToBuy, "weapon_railgun") == 0) && (inventory.currency >= 3000)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "drakon") == 0) && (inventory.currency >= 3000)){
+		GiveStuffToPlayer(player, "weapon_railgun", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 3000;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_railgun") == 0) && !(inventory.currency >= 3000)) {
+	else if ((strcmp(wpnToBuy, "drakon") == 0) && !(inventory.currency >= 3000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Lightning gun - Wunderwaffe DG2
-	else if ((strcmp(wpnToBuy, "weapon_lightninggun") == 0) && (inventory.currency >= 10000)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "wunderwaffe") == 0) && (inventory.currency >= 10000)){
+		GiveStuffToPlayer(player, "weapon_lightninggun", args.Argv(2));
 		//Get the weapon mod to spawn here too.
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 10000;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_lightninggun") == 0) && !(inventory.currency >= 10000)) {
+	else if ((strcmp(wpnToBuy, "wunderwaffe") == 0) && !(inventory.currency >= 10000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Rocket Launcher - L4 Siege
-	else if ((strcmp(wpnToBuy, "weapon_rocketlauncher") == 0) && (inventory.currency >= 6000)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "L4_siege") == 0) && (inventory.currency >= 6000)){
+		GiveStuffToPlayer(player, "weapon_rocketlauncher", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 6000;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_rocketlauncher") == 0) && !(inventory.currency >= 6000)) {
+	else if ((strcmp(wpnToBuy, "L4_siege") == 0) && !(inventory.currency >= 6000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Grenade Launcher - War Machine
-	else if ((strcmp(wpnToBuy, "weapon_grenadelauncher") == 0) && (inventory.currency >= 3500)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "war_machine") == 0) && (inventory.currency >= 3500)){
+		GiveStuffToPlayer(player, "weapon_grenadelauncher", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 3500;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_grenadelauncher") == 0) && !(inventory.currency >= 3500)) {
+	else if ((strcmp(wpnToBuy, "war_machine") == 0) && !(inventory.currency >= 3500)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Napalm launcher - China Lake
-	else if ((strcmp(wpnToBuy, "weapon_napalmgun") == 0) && (inventory.currency >= 2000)){
-		GiveStuffToPlayer(player, args.Argv(1), args.Argv(2));
+	else if ((strcmp(wpnToBuy, "china_lake") == 0) && (inventory.currency >= 2000)){
+		GiveStuffToPlayer(player, "weapon_napalmgun", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 2000;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "weapon_napalmgun") == 0) && !(inventory.currency >= 2000)) {
+	else if ((strcmp(wpnToBuy, "china_lake") == 0) && !(inventory.currency >= 2000)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Juggernog - Gives the player twice as much health
