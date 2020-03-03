@@ -566,6 +566,10 @@ Buy an item based on z currency
 //CONSOLE BUY MENU/SHOP
 void Cmd_Buy_f(const idCmdArgs &args) {
 	int i;
+	const char *key, *value;
+	float		yaw;
+	idVec3		org;
+	idDict		dict;
 	idPlayer	*player;
 	idInventory inventory;
 
@@ -674,6 +678,18 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "wunderwaffe") == 0) && (inventory.currency >= 10000)){
 		GiveStuffToPlayer(player, "weapon_lightninggun", args.Argv(2));
 		//Get the weapon mod to spawn here too.
+		yaw = player->viewAngles.yaw;
+
+		value = "weaponmod_lightninggun_chain";
+		dict.Set("classname", value);
+		dict.Set("angle", va("%f", yaw + 180));
+
+		org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(0, 0, 1);
+		dict.Set("origin", org.ToString());
+
+		idEntity *newEnt = NULL;
+		gameLocal.SpawnEntityDef(dict, &newEnt);
+		////////////////////////////////////////
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 10000;
 		common->Printf("Purchased!\n");
 	}
