@@ -94,7 +94,7 @@ rvMonsterGrunt::Restore
 */
 void rvMonsterGrunt::Restore ( idRestoreGame *savefile ) {
 	actionMeleeMoveAttack.Restore( savefile );
-	actionChaingunAttack.Restore( savefile );
+	//actionChaingunAttack.Restore( savefile );
 
 	savefile->ReadInt( rageThreshold );
 	savefile->ReadInt( standingMeleeNoAttackTime );
@@ -196,7 +196,7 @@ rvMonsterGrunt::OnDeath
 */
 void rvMonsterGrunt::OnDeath ( void ) {
 	RageStop ( );
-	gameLocal.GetLocalPlayer()->inventory.currency = gameLocal.GetLocalPlayer()->inventory.currency + 200;
+	gameLocal.GetLocalPlayer()->inventory.currency = gameLocal.GetLocalPlayer()->inventory.currency + 400;
 	return idAI::OnDeath ( );
 }
 

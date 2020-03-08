@@ -599,7 +599,7 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "weaponlist") == 0)){
 		common->Printf("Guns\t\t\tPrice\n");
 		common->Printf("-----------------------------------\n");
-		common->Printf("L-car_9\t\t\t800\n");
+		common->Printf("Lcar_9\t\t\t800\n");
 		common->Printf("kn44\t\t\t1500\n");
 		common->Printf("haymaker_12\t\t2000\n");
 		common->Printf("china_lake\t\t2000\n");
@@ -648,12 +648,12 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Hyperblaster - LCAR 9
-	else if ((strcmp(wpnToBuy, "L-car_9") == 0) && (inventory.currency >= 800)){
+	else if ((strcmp(wpnToBuy, "Lcar_9") == 0) && (inventory.currency >= 800)){
 		GiveStuffToPlayer(player, "weapon_hyperblaster", args.Argv(2));
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 800;
 		common->Printf("Purchased!\n");
 	}
-	else if ((strcmp(wpnToBuy, "L-car_9") == 0) && !(inventory.currency >= 800)) {
+	else if ((strcmp(wpnToBuy, "Lcar_9") == 0) && !(inventory.currency >= 800)) {
 		common->Printf("Insufficient funds.\n");
 	}
 	//Nailgun - Ray gun
@@ -678,7 +678,7 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "wunderwaffe") == 0) && (inventory.currency >= 10000)){
 		GiveStuffToPlayer(player, "weapon_lightninggun", args.Argv(2));
 		//Get the weapon mod to spawn here too.
-		yaw = player->viewAngles.yaw;
+		/*yaw = player->viewAngles.yaw;
 
 		value = "weaponmod_lightninggun_chain";
 		dict.Set("classname", value);
@@ -688,8 +688,10 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 		dict.Set("origin", org.ToString());
 
 		idEntity *newEnt = NULL;
-		gameLocal.SpawnEntityDef(dict, &newEnt);
+		gameLocal.SpawnEntityDef(dict, &newEnt);*/
 		////////////////////////////////////////
+		//****Removed chain lightning. Multiple deaths at the same time with chain lightning causes the game to crash
+		//Will instead model the wunderwaffe to be a one shot no matter what, but no chain lightningS
 		gameLocal.GetLocalPlayer()->inventory.currency = inventory.currency - 10000;
 		common->Printf("Purchased!\n");
 	}
@@ -1421,10 +1423,10 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 
 	wave = gameLocal.GetLocalPlayer()->inventory.zombieWave;
 
-	if (wave < 10)
-		numSpawns = 2 + (1 * wave);
+	if (wave < 6)
+		numSpawns = 1 + (1 * wave);
 	else
-		numSpawns = 12;
+		numSpawns = 6;
 
 	gameLocal.GetLocalPlayer()->inventory.zombieWave = gameLocal.GetLocalPlayer()->inventory.zombieWave + 1; //Increase the wave in the players inventory (after numspawns has been decided)
 	gameLocal.Printf("Current Wave: %i", gameLocal.GetLocalPlayer()->inventory.zombieWave);
