@@ -48,9 +48,6 @@ idCVar net_showPredictionError( "net_showPredictionError", "-1", CVAR_INTEGER | 
 bool g_ObjectiveSystemOpen = false;
 #endif
 
-//Added
-int saveCoolDown = 1000;
-
 // distance between ladder rungs (actually is half that distance, but this sounds better)
 const int LADDER_RUNG_DISTANCE = 32;
 
@@ -3413,6 +3410,10 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	int currentPoints = gameLocal.GetLocalPlayer()->inventory.currency;
 	sprintf_s(buff, "Points: \t%d", currentPoints);
 	_hud->SetStateString("points_num", buff);
+
+	int highestWave = gameLocal.GetLocalPlayer()->inventory.highscore;
+	sprintf_s(buff, "High_Score: \t%d", highestWave);
+	_hud->SetStateString("high_score", buff);
 
 	sprintf_s(buff, "Type-\"buy_list\"-in-console-to-see-shop");
 	_hud->SetStateString("buy_help", buff);
@@ -9328,14 +9329,6 @@ void idPlayer::Think( void ) {
 		}
 	}
 
-	
-	if (saveCoolDown == 0){
-		//saveHighScore();
-		saveCoolDown = 1000;
-	}
-
-	saveCoolDown--;
-
 	if ( !gameLocal.usercmds ) {
 		return;
 	}
@@ -14111,41 +14104,6 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 	}
 
 	return weaponNum;
-}
-
-
-//Added Getter and Setter methods for currency
-int idInventory::GetCurrency(){
-	return currency;
-}
-
-void idInventory::SetCurrency(int newCurrency){
-	currency = newCurrency;
-}
-
-void idInventory::saveHighScore()
-{
-	FILE * pFile;
-	//int n;
-
-	pFile = fopen("highestWave.txt", "w");
-
-	if (pFile == NULL){
-		fprintf(pFile, "%i", 0);
-	}
-	
-	fscanf(pFile, "%i", highscore);
-
-	if (zombieWave > highscore){
-		highscore = zombieWave;
-		fprintf(pFile, "%i", highscore);
-	}
-	
-	//puts("please, enter a name: ");
-	//gets(name);
-	//fprintf(pFile, "Name %d [%-10.10s]\n", n + 1, name);
-	
-	fclose(pFile);
 }
 
 // RITUAL END

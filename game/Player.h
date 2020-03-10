@@ -201,9 +201,6 @@ public:
 	int						weapons;
 	//Declared currency and getter/setter
 	int						currency;
-	int						GetCurrency();
-	void					SetCurrency( int newCurrency );
-	void					saveHighScore();
 	bool					doubletap;
 	int						totalHits;
 	bool					speedcola;
