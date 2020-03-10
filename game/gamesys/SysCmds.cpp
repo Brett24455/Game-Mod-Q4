@@ -791,6 +791,9 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	else if ((strcmp(wpnToBuy, "health") == 0) && !(inventory.currency >= 500)) {
 		common->Printf("Insufficient funds.\n");
 	}
+	else if (strcmp(wpnToBuy, "highwave") == 0) {
+		common->Printf("High Score :%i", gameLocal.GetLocalPlayer()->inventory.highscore);
+	}
 	//Nothing
 	else{
 		common->Printf("This does not exist within the shop.\n");
@@ -1420,7 +1423,6 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 	int			spawnDistance;
 	int			wave;
 
-
 	wave = gameLocal.GetLocalPlayer()->inventory.zombieWave;
 
 	if (wave < 6)
@@ -1429,6 +1431,31 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 		numSpawns = 6;
 
 	gameLocal.GetLocalPlayer()->inventory.zombieWave = gameLocal.GetLocalPlayer()->inventory.zombieWave + 1; //Increase the wave in the players inventory (after numspawns has been decided)
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	//Saving high score
+	FILE * pFile;
+	FILE * rFile;
+	//int n;
+
+	rFile = fopen("highestWave.txt", "r+");
+
+	fscanf(rFile, "%d", &gameLocal.GetLocalPlayer()->inventory.highscore);
+	fclose(rFile);
+
+	if (gameLocal.GetLocalPlayer()->inventory.zombieWave > gameLocal.GetLocalPlayer()->inventory.highscore){
+		pFile = fopen("highestWave.txt", "w+");
+
+		gameLocal.GetLocalPlayer()->inventory.highscore = gameLocal.GetLocalPlayer()->inventory.zombieWave;
+		fprintf(pFile, "%d", gameLocal.GetLocalPlayer()->inventory.highscore);
+		fclose(pFile);
+	}
+
+	//puts("please, enter a name: ");
+	//gets(name);
+	//fprintf(pFile, "Name %d [%-10.10s]\n", n + 1, name);
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	gameLocal.Printf("Current Wave: %i", gameLocal.GetLocalPlayer()->inventory.zombieWave);
 	spawnCoolDown = 100;
 	spawnDistance = 360;
@@ -3251,7 +3278,7 @@ void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
 	/*if ( player && player->CanBuy() )
 	{*/  
-		gameLocal.mpGame.OpenLocalBuyMenu();
+		//gameLocal.mpGame.OpenLocalBuyMenu();
 	/*}
 	else { //Added else statement
 		common->Printf("Cant open buy menu");

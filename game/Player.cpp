@@ -48,6 +48,9 @@ idCVar net_showPredictionError( "net_showPredictionError", "-1", CVAR_INTEGER | 
 bool g_ObjectiveSystemOpen = false;
 #endif
 
+//Added
+int saveCoolDown = 1000;
+
 // distance between ladder rungs (actually is half that distance, but this sounds better)
 const int LADDER_RUNG_DISTANCE = 32;
 
@@ -342,6 +345,7 @@ void idInventory::RestoreInventory( idPlayer *owner, const idDict &dict ) {
 
 	// health/armor
 	zombieWave		= dict.GetInt("zombieWave", "0");
+	highscore		= dict.GetInt("highscore", "0");
 	maxHealth		= dict.GetInt( "maxhealth", "100" );
 	currency		= dict.GetInt( "currency", "500" );
 	doubletap		= dict.GetBool( "doubletap", "0" );
@@ -9324,6 +9328,14 @@ void idPlayer::Think( void ) {
 		}
 	}
 
+	
+	if (saveCoolDown == 0){
+		//saveHighScore();
+		saveCoolDown = 1000;
+	}
+
+	saveCoolDown--;
+
 	if ( !gameLocal.usercmds ) {
 		return;
 	}
@@ -14109,6 +14121,31 @@ int idInventory::GetCurrency(){
 
 void idInventory::SetCurrency(int newCurrency){
 	currency = newCurrency;
+}
+
+void idInventory::saveHighScore()
+{
+	FILE * pFile;
+	//int n;
+
+	pFile = fopen("highestWave.txt", "w");
+
+	if (pFile == NULL){
+		fprintf(pFile, "%i", 0);
+	}
+	
+	fscanf(pFile, "%i", highscore);
+
+	if (zombieWave > highscore){
+		highscore = zombieWave;
+		fprintf(pFile, "%i", highscore);
+	}
+	
+	//puts("please, enter a name: ");
+	//gets(name);
+	//fprintf(pFile, "Name %d [%-10.10s]\n", n + 1, name);
+	
+	fclose(pFile);
 }
 
 // RITUAL END

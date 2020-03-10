@@ -3,6 +3,7 @@
 //
 // MERGE_DATE 07/07/2004
 
+#include <stdio.h>
 #ifndef __GAME_PLAYER_H__
 #define __GAME_PLAYER_H__
 
@@ -195,12 +196,14 @@ const int	ASYNC_PLAYER_TOURNEY_STATUS_BITS = idMath::BitsForInteger( PTS_NUM_STA
 class idInventory {
 public:
 	int						zombieWave;
+	int						highscore;
 	int						maxHealth;
 	int						weapons;
 	//Declared currency and getter/setter
 	int						currency;
 	int						GetCurrency();
 	void					SetCurrency( int newCurrency );
+	void					saveHighScore();
 	bool					doubletap;
 	int						totalHits;
 	bool					speedcola;
