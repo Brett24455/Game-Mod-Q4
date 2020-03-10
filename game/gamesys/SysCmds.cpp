@@ -581,12 +581,9 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 		return;
 	}
 
-	common->Printf("Money: %i",inventory.currency);
-	common->Printf("Weapon Name: " + wpnToBuy + "\n");
-
 	//Devpoints
 	if ((strcmp(wpnToBuy, "devpoints") == 0)){
-		gameLocal.GetLocalPlayer()->inventory.currency = 50000;
+		gameLocal.GetLocalPlayer()->inventory.currency = 100000;
 	}
 	//buy list
 	else if ((strcmp(wpnToBuy, "list") == 0)){
@@ -790,9 +787,6 @@ void Cmd_Buy_f(const idCmdArgs &args) {
 	}
 	else if ((strcmp(wpnToBuy, "health") == 0) && !(inventory.currency >= 500)) {
 		common->Printf("Insufficient funds.\n");
-	}
-	else if (strcmp(wpnToBuy, "highwave") == 0) {
-		common->Printf("High Score :%i", gameLocal.GetLocalPlayer()->inventory.highscore);
 	}
 	//Nothing
 	else{
@@ -1472,37 +1466,18 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 		dict.Set("classname", value);
 		dict.Set("angle", va("%f", yaw + 180));
 
-		/*for( i = 2; i < args.Argc() - 1; i += 2 ) {
-
-		key = args.Argv( i );
-		value = args.Argv( i + 1 );
-
-		dict.Set( key, value );
-		}*/
-
 		// RAVEN BEGIN
 		// kfuller: want to know the name of the entity I spawned
 		for (numSpawns; numSpawns > 0;){
-			
-			if (spawnCoolDown){
-				spawnCoolDown--;
-				//gameLocal.Printf("%i",spawnCoolDown);
-			}
 
-			if (!spawnCoolDown){
-				org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * spawnDistance + idVec3(0, 0, 1);
-				dict.Set("origin", org.ToString());
+			org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * spawnDistance + idVec3(0, 0, 1);
+			dict.Set("origin", org.ToString());
 
-				idEntity *newEnt = NULL;
-				spawnCoolDown = 1000;
-				gameLocal.SpawnEntityDef(dict, &newEnt);
-				numSpawns--;
-				spawnDistance += 1;
-
-				if (newEnt)	{
-					//gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
-				}
-			}
+			idEntity *newEnt = NULL;
+			spawnCoolDown = 1000;
+			gameLocal.SpawnEntityDef(dict, &newEnt);
+			numSpawns--;
+			spawnDistance += 1;
 		}
 		
 		// RAVEN END
