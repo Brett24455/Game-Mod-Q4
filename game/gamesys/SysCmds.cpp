@@ -1430,7 +1430,6 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 	//Saving high score
 	FILE * pFile;
 	FILE * rFile;
-	//int n;
 
 	rFile = fopen("highestWave.txt", "r+");
 
@@ -1445,9 +1444,6 @@ void Cmd_StartWave_f(const idCmdArgs &args){
 		fclose(pFile);
 	}
 
-	//puts("please, enter a name: ");
-	//gets(name);
-	//fprintf(pFile, "Name %d [%-10.10s]\n", n + 1, name);
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	gameLocal.Printf("Current Wave: %i", gameLocal.GetLocalPlayer()->inventory.zombieWave);
