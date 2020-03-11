@@ -3404,22 +3404,19 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 
 	char buff[500];
 	int currentWave = gameLocal.GetLocalPlayer()->inventory.zombieWave;
-	sprintf_s(buff, "Wave: \t%d", currentWave);
+	sprintf_s(buff, "Wave:!\t%d", currentWave);
 	_hud->SetStateString("wave_num", buff);
 
 	int currentPoints = gameLocal.GetLocalPlayer()->inventory.currency;
-	sprintf_s(buff, "Points: \t%d", currentPoints);
+	sprintf_s(buff, "Points:!\t%d", currentPoints);
 	_hud->SetStateString("points_num", buff);
 
 	int highestWave = gameLocal.GetLocalPlayer()->inventory.highscore;
-	sprintf_s(buff, "High_Score: \t%d", highestWave);
+	sprintf_s(buff, "High!Score:!\t%d", highestWave);
 	_hud->SetStateString("high_score", buff);
 
-	sprintf_s(buff, "Type-\"buy_list\"-in-console-to-see-shop");
+	sprintf_s(buff, "Type!\"buy!list\"!in!console!to!see!shop");
 	_hud->SetStateString("buy_help", buff);
-
-	sprintf_s(buff, "_=space");
-	_hud->SetStateString("buy_help_2", buff);
 
 	temp = _hud->State().GetInt ( "player_health", "-1" );
 	if ( temp != health ) {		
